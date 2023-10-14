@@ -2,7 +2,7 @@ pandas
 yfinance
 cufflinks
 pandas-datareader
-wikipedia-api
+wikipedia
 finnhub-python
 plotly
 python-dotenv
