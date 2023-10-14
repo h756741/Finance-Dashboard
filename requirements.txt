@@ -1,0 +1,8 @@
+pandas
+yfinance
+cufflinks
+pandas-datareader
+wikipedia-api
+finnhub-python
+plotly
+python-dotenv
