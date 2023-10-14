@@ -10,8 +10,6 @@ import plotly.graph_objects as go
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-
 api_key = os.getenv('FINHUB_API_KEY')
 finnhub_client = finnhub.Client(api_key=api_key)
 
@@ -66,22 +64,31 @@ st.plotly_chart(fig)
 
 # Company Data
 st.subheader('Company Profile')
-company_profile = fetch_company_profile(tickerSymbol)
-profile_md= f"""
-- **Country**: {company_profile['country']}
-- **Currency**: {company_profile['currency']}
-- **Exchange**: {company_profile['exchange']}
-- **Industry**: {company_profile['finnhubIndustry']}
-- **IPO Date**: {company_profile['ipo']}
-- **Market Capitalization (millions)**: {company_profile['marketCapitalization']}
-- **Name**: {company_profile['name']}
-- **Phone**: {company_profile['phone']}
-- **Shares Outstanding**: {company_profile['shareOutstanding']}
-- **Ticker**: {company_profile['ticker']}
-- **Website**: [Link]({company_profile['weburl']})
-"""
-st.markdown(profile_md)
-st.image(company_profile['logo'], use_column_width=False)
+
+try:
+    company_profile = fetch_company_profile(tickerSymbol)
+except finnhub.FinnhubAPIException as e:
+    st.error("Error fetching company profile: " + str(e))
+    company_profile = None
+
+if company_profile:
+    profile_md= f"""
+    - **Country**: {company_profile['country']}
+    - **Currency**: {company_profile['currency']}
+    - **Exchange**: {company_profile['exchange']}
+    - **Industry**: {company_profile['finnhubIndustry']}
+    - **IPO Date**: {company_profile['ipo']}
+    - **Market Capitalization (millions)**: {company_profile['marketCapitalization']}
+    - **Name**: {company_profile['name']}
+    - **Phone**: {company_profile['phone']}
+    - **Shares Outstanding**: {company_profile['shareOutstanding']}
+    - **Ticker**: {company_profile['ticker']}
+    - **Website**: [Link]({company_profile['weburl']})
+    """
+    st.markdown(profile_md)
+    st.image(company_profile['logo'], use_column_width=False)
+else:
+    st.warning("No company profile information available.")
 
 st.subheader('Earnings')
 earnings_data = fetch_earnings(tickerSymbol)
