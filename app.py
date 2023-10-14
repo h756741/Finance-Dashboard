@@ -8,7 +8,7 @@ import wikipedia as wp
 import finnhub
 import plotly.graph_objects as go
 
-api_key = st.secrets('FINNHUB_API_KEY')
+api_key = st.secrets['FINNHUB_API_KEY']
 finnhub_client = finnhub.Client(api_key=api_key)
 
 @st.cache_data
