@@ -23,6 +23,7 @@ def fetch_earnings(ticker):
 def fetch_news(ticker, start_date, end_date):
     return finnhub_client.company_news(ticker, _from=start_date, to=end_date)
 
+#App
 st.title("Finance Dashboard")
 
 st.subheader("Stocks 📈")
